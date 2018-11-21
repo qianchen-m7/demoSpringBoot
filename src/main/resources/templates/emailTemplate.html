@@ -10,5 +10,18 @@
 <link rel="shortcut icon" type="image/png" th:href="@{/static/images/favicon.png}">gg</link>
 <img th:src="@{/static/images/favicon.png}" >
 <h3>我在哪里</h3>
+
+<h2>上传文件sss</h2>
+<form action="/up" method="post" enctype="multipart/form-data" >
+    <!--<input  type="file" name="myfile" method="post" action="localfile/upload"/><br>-->
+    <!--<input type="submit" value="提交"/>-->
+
+    <input type="file" name="myfile"/><br/>
+    <input  type="submit" value="提交"/>
+
+</form>
+<h1>文件下载</h1>
+<a href="/down">下载</a>
+
 </body>
 </html>

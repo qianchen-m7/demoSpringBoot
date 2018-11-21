@@ -1,9 +1,12 @@
 package com.example.demoSpringBoot;
 
 import com.qch.controller.CustomerController;
+import com.qch.service.Task;
+import lombok.SneakyThrows;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -13,10 +16,16 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.concurrent.Future;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DemoSpringBootApplicationTests {
 	private MockMvc mvc;
+
+
+
+
 	@Before
 	public void setUp() throws Exception {
 		/*
@@ -50,4 +59,6 @@ public class DemoSpringBootApplicationTests {
 				.andDo(MockMvcResultHandlers.print())
 				.andReturn();
 	}
+
+
 }
