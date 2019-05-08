@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
-public class User implements Serializable{
+public class User extends PaContent{
         private String id;
         private String userNo;
         private String userName;
