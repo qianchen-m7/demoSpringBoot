@@ -15,10 +15,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,13 +69,14 @@ public class DataTest {
     }
 
     @Test
-    public void testasCII() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void testasCII() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
    /* String d=stringToAscii("ddName");
         System.out.println(d);*/
         User u=new User();
         u.setEmail("ds@1.com");
         u.setPaId("ds");
         u.setId("ef");
+        u.setPassword("gewugen");
         Class tempClass=User.class;
        /* Method[] methods=cl.getMethods();
         List<String>list=new ArrayList<>();
@@ -99,6 +97,7 @@ public class DataTest {
             tempClass = tempClass.getSuperclass(); //得到父类,然后赋给自己
         }
         List<String>list=new ArrayList<>();
+        Map<String,Object> map=new HashMap<>();
         for (Field field : fieldList) {
             // 得到成员变量的类型的类类型
             Class<?> filedType = field.getType();
@@ -114,19 +113,34 @@ public class DataTest {
 
             field.setAccessible(true);
            // System.out.println(field.get(u));
+
             if(field.get(u)!=null)
             {
                 list.add(fieldName);
+                map.put(fieldName,field.get(u));
             }
 
 
         }
 
         Collections.sort(list);
+        StringBuffer sbu = new StringBuffer();
         for(String s:list)
         {
-            System.out.println(s);
+           /* System.out.println(s);
+            Field field = tempClass.getDeclaredField(s);
+            field.setAccessible(true);
+            if(field.get(u)!=null) {
+                sbu.append(s).append("=").append(field.get(u)).append("&");
+            }*/
+            if(map.get(s)!=null) {
+                sbu.append(s).append("=").append(map.get(s)).append("&");
+            }
+
         }
+        String sbu1=sbu.substring(0,sbu.length()-1);
+
+        System.out.println(sbu1);
 
     }
     public static String stringToAscii(String value)
