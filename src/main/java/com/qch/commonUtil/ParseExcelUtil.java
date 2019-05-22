@@ -1,6 +1,8 @@
 package com.qch.commonUtil;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,7 +64,7 @@ public class ParseExcelUtil {
     public <T>List<T> dispatch(Sheet sheet, Class<T> clazz) {
         List<T> instances = new ArrayList<>();
 
-        List<Map<String, String>> sheetValue = parseExcelSheet(sheet);
+        List<Map<String, String>> sheetValue = parseExcelSheet(sheet,clazz);
 
         for (int i = 0; i < sheetValue.size(); i++) {
             Map<String, String> map = sheetValue.get(i);
@@ -149,12 +151,44 @@ public class ParseExcelUtil {
      那么List<Map>就是的内容就是
      List: map1( id: 1, alarm: abcd1 ),map2(( id: 2, alarm: abcd2 ).....
      */
-    public List<Map<String, String>> parseExcelSheet(Sheet sheet) {
+    public List<Map<String, String>> parseExcelSheet(Sheet sheet,Class clazz) {
         List<Map<String, String>> result = new ArrayList<>();
         Map<String, String> rowValue = null;
         //int rows = sheet.getPhysicalNumberOfRows();
         int rows = sheet.getLastRowNum();
-        String[] headers = getHeaderValue(sheet.getRow(0));
+
+        String[] yheaders = getHeaderValue(sheet.getRow(0));
+
+        //根据中文匹配字段，根据注解获取值与表头中文匹配
+        String[] headers=new String[yheaders.length];
+        // 获取所有的字段
+        Field[] fields = clazz.getDeclaredFields();
+
+        int l=0;
+        for(String h:yheaders)
+        {
+            for (Field f : fields) {
+                // 判断字段注解是否存在
+                boolean annotationPresent2 = f.isAnnotationPresent(ApiModelProperty.class);
+
+                if (annotationPresent2) {
+
+                    ApiModelProperty name = f.getAnnotation(ApiModelProperty.class);
+                    // 获取注解值
+                    String nameStr = name.value();
+
+                    // System.out.println(nameStr);
+
+                    if(nameStr.equals(h))
+                    {
+                        headers[l]=f.getName();
+                        l++;
+                        break;
+                    }
+                }
+            }
+
+        }
 
         for (int i = 1; i <=rows; i++) {
             rowValue = new HashMap<>();
