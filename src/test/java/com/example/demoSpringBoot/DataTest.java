@@ -15,6 +15,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -195,5 +197,17 @@ public class DataTest {
             in[i]=Integer.parseInt(String.valueOf(v[i]));
         }
         return in;
+    }
+
+    @Test
+    public void time(){
+        System.out.println("在这里"+count(new BigDecimal(2),new BigDecimal(3),new BigDecimal(100)));
+    }
+    private BigDecimal count(BigDecimal b1,BigDecimal b2,BigDecimal b3)
+    {
+        BigDecimal bigDecimal=new BigDecimal(0);
+        BigDecimal q1=b1.divide(b2,4, RoundingMode.HALF_UP);
+        bigDecimal= (q1.multiply(b3)).setScale(2, RoundingMode.HALF_UP);
+        return  bigDecimal;
     }
 }
