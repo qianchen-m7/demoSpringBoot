@@ -17,6 +17,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -202,6 +204,11 @@ public class DataTest {
     @Test
     public void time(){
         System.out.println("在这里"+count(new BigDecimal(2),new BigDecimal(3),new BigDecimal(100)));
+        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        DateFormat format2 = new SimpleDateFormat("yyyyMMHHmmss");
+        String time1=format1.format(new Date());
+        String time2=format2.format(new Date());
+        System.out.println(time1+"我在这范德萨法律"+time2);
     }
     private BigDecimal count(BigDecimal b1,BigDecimal b2,BigDecimal b3)
     {
@@ -209,5 +216,16 @@ public class DataTest {
         BigDecimal q1=b1.divide(b2,4, RoundingMode.HALF_UP);
         bigDecimal= (q1.multiply(b3)).setScale(2, RoundingMode.HALF_UP);
         return  bigDecimal;
+    }
+
+    @Test
+    public void time1(){
+
+        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        DateFormat format2 = new SimpleDateFormat("yyyyMMHHmmss");
+        String time1=format1.format(new Date());
+        String time2=format2.format(new Date());
+        System.out.println(time1+"我在这范德萨法律"+time2);
+
     }
 }
